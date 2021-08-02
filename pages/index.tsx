@@ -1,4 +1,4 @@
-import { fetchSite, Site, Entry, Page, Header, Subscribe, splitEntries, Latest, ChangelogCard, Statistic, Recent } from '@pinpt/react';
+import { fetchSite, Site, Entry, Page, Header, Subscribe, splitEntries, Latest, ChangelogCard, Statistic, Recent, Footer, Copyright, Logo, Social } from '@pinpt/react';
 import { useRouter } from 'next/dist/client/router';
 import config from '../pinpoint.config';
 
@@ -25,13 +25,14 @@ const Card = ({ entry }: { entry: Entry }) => {
 export default function Home(props: HomeProps) {
   const { site, changelogs } = props;
   const { latest, recent } = splitEntries(changelogs, 2);
+  console.log(site);
 
   return (
     <Page
       header={(
         <Header
           title={site.name}
-          description={`See what's new in ${site.name}`}
+          description={site.theme.description}
           subscribe={<Subscribe />}
         />
       )}
@@ -53,11 +54,36 @@ export default function Home(props: HomeProps) {
           })}
         </Recent>
       ) : undefined}
+      footer={(
+        <Footer
+          copyright={(
+            <Copyright
+              text={site.theme.copyright}
+              logo={(
+                <Logo
+                  src={site.logoUrl}
+                  href={site.theme.logoLink}
+                />
+              )}
+            />
+          )}
+          subscribe={<Subscribe />}
+          social={(
+            <Social.Bar>
+              {site.theme.social?.facebook && <Social.Facebook href={site.theme.social.facebook} />}
+              {site.theme.social?.instagram && <Social.Instagram href={site.theme.social.instagram} />}
+              {site.theme.social?.linkedin && <Social.LinkedIn href={site.theme.social.linkedin} />}
+              {site.theme.social?.github && <Social.Github href={site.theme.social.github} />}
+              {site.theme.social?.twitter && <Social.Twitter href={site.theme.social.twitter} />}
+            </Social.Bar>
+          )}
+        />
+      )}
     />
   );
 };
 
-export async function getStaticProps(context: any) {
+export async function getStaticProps() {
   const { site, changelogs } = await fetchSite(config.slug);
   return {
     props: {

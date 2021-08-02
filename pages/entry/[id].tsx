@@ -5,7 +5,7 @@ export default function EntryPage (props: { entry: Entry }) {
 	const { entry } = props;
 
 	return (
-		<Content node={entry.content} />
+		<Content node={entry?.content} />
 	);
 };
 
@@ -19,7 +19,7 @@ export async function getStaticPaths () {
 				title: c.title,
 			}
 		})),
-		fallback: true,
+		fallback: false,
 	};
 };
 
