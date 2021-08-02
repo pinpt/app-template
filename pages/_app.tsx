@@ -4,6 +4,6 @@ import '@pinpt/react/base.css';
 import '../theme.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+	return <Component {...pageProps} />;
 }
-export default MyApp
+export default MyApp;
