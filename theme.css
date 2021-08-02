@@ -1,0 +1,68 @@
+body {
+	font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial,
+		Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+	margin: 0;
+}
+
+.Box-Shadow {
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.Clap.icon {
+	color: gray;
+}
+
+.Clap.icon.active {
+	color: purple;
+}
+
+.Clap.counter {
+	color: gray;
+}
+
+.Changelog.Card.Date {
+	color: #9685ac;
+}
+
+.Changelog.Card.Container.wrapper {
+	background: #473e53;
+	color: #faf9f9;
+}
+
+.Latest {
+	background-color: #292135;
+}
+
+.Latest .heading {
+	color: #faf9f9;
+}
+
+.Recent {
+	background-color: #332a40;
+}
+
+.Recent .heading {
+	color: #faf9f9;
+}
+
+.Changelog.Card.Read {
+	color: #a078d4;
+}
+
+.Footer {
+	background-color: #1e142c;
+	color: #faf9f9;
+}
+
+.Footer .Social.Item {
+	color: #faf9f9;
+}
+
+.Subscribe {
+	color: #a078d4;
+}
+
+.Header {
+	background-color: #332a40;
+	color: #faf9f9;
+}
