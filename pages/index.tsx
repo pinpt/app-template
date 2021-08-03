@@ -43,7 +43,7 @@ export default function Home(props: HomeProps) {
 	const { latest, recent } = splitEntries(changelogs, 2);
 
 	return (
-		<Page
+		<Page.Dashboard
 			header={<Header title={`${site.name} Changelog`} description={site.theme.description} subscribe={<Subscribe />} />}
 			latest={
 				latest.length > 0 ? (

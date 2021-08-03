@@ -12,7 +12,7 @@
 		"generate": "npm run build && npm run export"
 	},
 	"dependencies": {
-		"@pinpt/react": "0.0.15",
+		"@pinpt/react": "^0.1.0",
 		"encoding": "^0.1.13",
 		"next": "11.0.1",
 		"react": "17.0.2",
