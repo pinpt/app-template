@@ -41,11 +41,10 @@ const Card = ({ entry }: { entry: Entry }) => {
 export default function Home(props: HomeProps) {
 	const { site, changelogs } = props;
 	const { latest, recent } = splitEntries(changelogs, 2);
-	console.log(site);
 
 	return (
 		<Page
-			header={<Header title={site.name} description={site.theme.description} subscribe={<Subscribe />} />}
+			header={<Header title={`${site.name} Changelog`} description={site.theme.description} subscribe={<Subscribe />} />}
 			latest={
 				latest.length > 0 ? (
 					<Latest>

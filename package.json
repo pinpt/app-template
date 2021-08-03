@@ -12,13 +12,14 @@
 		"generate": "npm run build && npm run export"
 	},
 	"dependencies": {
-		"@pinpt/react": "0.0.14",
+		"@pinpt/react": "0.0.15",
 		"encoding": "^0.1.13",
 		"next": "11.0.1",
 		"react": "17.0.2",
 		"react-dom": "17.0.2"
 	},
 	"devDependencies": {
+		"@tailwindcss/aspect-ratio": "^0.2.1",
 		"@types/react": "17.0.15",
 		"autoprefixer": "^10.3.1",
 		"eslint": "7.32.0",

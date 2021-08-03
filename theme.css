@@ -1,15 +1,47 @@
-body {
-	font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica Neue, Arial,
-		Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-	margin: 0;
+:root {
+	--page-bg-color: #fff;
+    --page-text-color: #3f3f46;
+    --page-secondary-text-color: #a1a1aa;
+    --page-highlight-color: #6366f1;
+    --header-bg-color: var(--page-bg-color);
+    --header-title-color: var(--page-text-color);
+    --header-description-color: var(--page-secondary-text-color);
+    --header-subscribe-color: var(--page-highlight-color);
+    --section-bg-color: #fafafa;
+    --section-border-color: #e4e4e7;
+    --tile-bg-color: #fff;
+    --tile-title-color: var(--page-text-color);
+    --tile-date-color: var(--page-secondary-text-color);
+    --tile-summary-color: #71717a;
+    --tile-info-color: var(--page-secondary-text-color);
+    --tile-link-color: var(--page-highlight-color);
+    --article-bg-color: var(--page-bg-color);
+    --article-text-color: var(--page-text-color);
+    --article-info-color: #71717a;
+    --article-link-color: var(--page-highlight-color);
+    --article-border-color: var(--section-border-color);
+    --article-block-bg-color: var(--section-bg-color);
+    --footer-bg-color: #18181b;
+    --footer-text-color: #71717a;
+	--page-bg-color: #111827;
+    --page-text-color: #f4f4f5;
+    --page-secondary-text-color: #a1a1aa;
+    --page-tertiary-text-color: #818cf8;
+    --page-highlight-color: #818cf8;
+    --section-bg-color: #141d2e;
+    --section-border-color: #3f3f46;
+    --tile-bg-color: #20293b;
+    --tile-summary-color: #d4d4d8;
+    --article-info-color: #d4d4d8;
+    --footer-bg-color: #000;
 }
 
 .Box-Shadow {
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	@apply shadow;
 }
 
 .Clap.icon {
-	color: gray;
+	@apply text-gray-500;
 }
 
 .Clap.icon.active {
@@ -21,32 +53,38 @@ body {
 }
 
 .Changelog.Card.Date {
-	color: #9685ac;
+	@apply text-purple-300;
+}
+
+.Changelog.Card.Title {
+	@apply text-2xl;
+	font-weight: 600;
+	color: var(--tile-title-color);
 }
 
 .Changelog.Card.Container.wrapper {
-	background: #473e53;
-	color: #faf9f9;
+	@apply bg-gray-900 text-gray-100;
 }
 
 .Latest {
-	background-color: #292135;
+	@apply bg-gray-700;
 }
 
 .Latest .heading {
-	color: #faf9f9;
+	@apply text-gray-100 text-4xl;
+
 }
 
 .Recent {
-	background-color: #332a40;
+	@apply bg-gray-800;
 }
 
 .Recent .heading {
-	color: #faf9f9;
+	@apply text-gray-100 text-4xl;
 }
 
 .Changelog.Card.Read {
-	color: #a078d4;
+	@apply text-purple-400;
 }
 
 .Footer {
@@ -65,4 +103,16 @@ body {
 .Header {
 	background-color: #332a40;
 	color: #faf9f9;
+}
+
+.Header .title {
+	@apply text-4xl md:text-5xl text-center font-extrabold transition-all duration-200
+}
+
+.Header .title:hover {
+  filter: brightness(1.3);
+}
+
+.Header .description {
+	@apply text-gray-300;
 }
