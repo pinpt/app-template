@@ -1,10 +1,10 @@
-import { Content, Entry, fetchContent, fetchSite, Page } from '@pinpt/react';
+import { Entry, fetchContent, fetchSite, Prebuilt, Site } from '@pinpt/react';
 import config from '../../pinpoint.config';
 
-export default function EntryPage(props: { entry: Entry }) {
-	const { entry } = props;
+export default function EntryPage(props: { entry: Entry, site: Site }) {
+	const { entry, site } = props;
 
-	return <Page.Entry renderer={<Content node={entry?.content} />} />;
+	return <Prebuilt.Entry entry={entry} site={site} />;
 }
 
 export async function getStaticPaths() {
@@ -22,10 +22,14 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { id: string; title: string } }) {
-	const entry = await fetchContent(params.id);
+	const [entry, siteData] = await Promise.all([
+		fetchContent(params.id),
+		fetchSite(config.slug)
+	]);
 	return {
 		props: {
 			entry,
+			site: siteData.site,
 		},
 	};
 }
