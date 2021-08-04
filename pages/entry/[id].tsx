@@ -1,14 +1,10 @@
-import { Entry, Page, fetchContent, fetchSite, Content } from '@pinpt/react';
+import { Content, Entry, fetchContent, fetchSite, Page } from '@pinpt/react';
 import config from '../../pinpoint.config';
 
 export default function EntryPage(props: { entry: Entry }) {
 	const { entry } = props;
 
-	return (
-		<Page.Entry
-			renderer={<Content node={entry?.content} />}
-		/>
-	);
+	return <Page.Entry renderer={<Content node={entry?.content} />} />;
 }
 
 export async function getStaticPaths() {

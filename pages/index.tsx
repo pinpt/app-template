@@ -1,17 +1,11 @@
-import {
-	fetchSite,
-	Site,
-	Entry,
-	ChangelogCard,
-	Prebuilt,
-} from '@pinpt/react';
 import { useRouter } from 'next/dist/client/router';
+import { ChangelogCard, Entry, fetchSite, Prebuilt, Site } from '@pinpt/react';
 import config from '../pinpoint.config';
+
 interface HomeProps {
 	site: Site;
 	entries: Entry[];
 }
-
 
 export default function Home(props: HomeProps) {
 	const { site, entries } = props;
@@ -22,9 +16,7 @@ export default function Home(props: HomeProps) {
 			entries={entries}
 			site={site}
 			latestCount={2}
-			renderCardButton={(entry) => (
-				<ChangelogCard.ReadButton onClick={() => router.push(`/entry/${entry.id}`)} />
-			)}
+			renderCardButton={(entry) => <ChangelogCard.ReadButton onClick={() => router.push(`/entry/${entry.id}`)} />}
 		/>
 	);
 }
