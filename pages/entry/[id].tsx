@@ -1,7 +1,7 @@
 import { Entry, fetchContent, fetchSite, Prebuilt, Site } from '@pinpt/react';
 import config from '../../pinpoint.config';
 
-export default function EntryPage(props: { entry: Entry, site: Site }) {
+export default function EntryPage(props: { entry: Entry; site: Site }) {
 	const { entry, site } = props;
 
 	return <Prebuilt.Entry entry={entry} site={site} />;
@@ -22,10 +22,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }: { params: { id: string; title: string } }) {
-	const [entry, siteData] = await Promise.all([
-		fetchContent(params.id),
-		fetchSite(config.slug)
-	]);
+	const [entry, siteData] = await Promise.all([fetchContent(params.id), fetchSite(config.slug)]);
 	return {
 		props: {
 			entry,
