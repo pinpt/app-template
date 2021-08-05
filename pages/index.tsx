@@ -16,7 +16,8 @@ export default function Home(props: HomeProps) {
 			entries={entries}
 			site={site}
 			latestCount={2}
-			renderCardButton={(entry) => <ChangelogCard.ReadButton onClick={() => router.push(`/entry/${entry.id}`)} />}
+			handleSelectEntry={(id) => router.push(`/entry/${id}`)}
+			handleSearch={(value) => router.push(`/search?term=${value}`)}
 		/>
 	);
 }
