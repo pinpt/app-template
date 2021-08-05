@@ -8,10 +8,12 @@
 		"start": "next start",
 		"format": "prettier --write .",
 		"lint": "next lint",
-		"export": "next export",
-		"generate": "npm run build && npm run export"
+		"login": "pinpt login",
+		"logout": "pinpt logout",
+		"deploy": "pinpt deploy"
 	},
 	"dependencies": {
+		"@pinpt/cli": "^0.0.4",
 		"@pinpt/react": "^0.3.5",
 		"encoding": "^0.1.13",
 		"next": "11.0.1",
