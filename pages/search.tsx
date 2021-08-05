@@ -9,13 +9,14 @@ interface SearchProps {
 
 export default function Search(props: SearchProps) {
 	const router = useRouter();
-	const { results } = useSearch(router?.query?.term as string, config.siteId);
+	const { results, loading } = useSearch(router?.query?.term as string, config.siteId);
 	return (
 		<Prebuilt.SearchResults
 			site={props.site}
 			entries={results}
 			handleSelectEntry={(id) => router.push(`/entry/${id}`)}
 			handleSearch={(value) => router.push(`/search?term=${value}`)}
+			loading={loading}
 		/>
 	);
 }
