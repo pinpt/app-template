@@ -10,15 +10,37 @@ interface SearchProps {
 
 export default function Search(props: SearchProps) {
 	const router = useRouter();
-	const { results, loading } = useSearch((router?.query?.term ?? '') as string, config.siteId);
+	const tags = JSON.parse(decodeURIComponent((router?.query?.tags ?? '') as string) || '[]');
+	const { results, loading } = useSearch((router?.query?.term ?? '') as string, tags, config.siteId);
 
 	const handleRemoveFromQuery = useCallback(
-		(_term: string, clear: boolean) => {
+		(term: string, clear: boolean) => {
+			console.log(term, tags);
 			if (clear) {
 				router.push('/');
+			} else {
+				const idx = tags.indexOf(term);
+				if (idx >= 0) {
+					const res = [...tags];
+					res.splice(idx, 1);
+					if (res.length === 0) {
+						router.push('/');
+					} else {
+						router.push(`/search?tags=${encodeURIComponent(JSON.stringify(res))}`);
+					}
+				}
 			}
 		},
-		[router]
+		[router, tags]
+	);
+
+	const handleAddToQuery = useCallback(
+		(term: string) => {
+			if (!tags.includes(term)) {
+				router.push(`/search?tags=${encodeURIComponent(JSON.stringify([...tags, term]))}`);
+			}
+		},
+		[router, tags]
 	);
 
 	return (
@@ -29,7 +51,9 @@ export default function Search(props: SearchProps) {
 			handleSearch={(value) => router.push(`/search?term=${value}`)}
 			loading={loading}
 			searchTerm={(router?.query?.term ?? '') as string}
+			searchTags={tags}
 			handleRemoveFromQuery={handleRemoveFromQuery}
+			handleAddTagToQuery={handleAddToQuery}
 		/>
 	);
 }

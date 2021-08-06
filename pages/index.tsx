@@ -18,6 +18,7 @@ export default function Home(props: HomeProps) {
 			latestCount={2}
 			handleSelectEntry={(id) => router.push(`/entry/${id}`)}
 			handleSearch={(value) => router.push(`/search?term=${value}`)}
+			handleAddTagToQuery={(value) => router.push(`/search?tags=${encodeURIComponent(JSON.stringify([value]))}`)}
 		/>
 	);
 }
