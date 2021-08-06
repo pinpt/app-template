@@ -1,4 +1,4 @@
-import { Entry, fetchContent, fetchSite, Prebuilt, Site } from '@pinpt/react';
+import { Entry, fetchAnalytics, fetchSite, Prebuilt, Site, Analytics } from '@pinpt/react';
 import { useRouter } from 'next/router';
 import config from '../../pinpoint.config';
 
@@ -9,10 +9,11 @@ interface PageProps {
 	nextPage: number;
 	previousPage: number;
 	currentPage: number;
+	analytics: Analytics;
 }
 
 export default function Page(props: PageProps) {
-	const { entries, site, nextPage, previousPage, currentPage, pageCount } = props;
+	const { entries, site, nextPage, previousPage, currentPage, pageCount, analytics } = props;
 	const router = useRouter();
 
 	return (
@@ -27,6 +28,7 @@ export default function Page(props: PageProps) {
 			pageBack={previousPage !== 1 ? () => router.push(`/page/${previousPage}`) : () => router.push('/')}
 			pageNumber={currentPage}
 			pageCount={pageCount}
+			analytics={analytics}
 		/>
 	);
 }
@@ -62,6 +64,8 @@ export async function getStaticProps({ params }: { params: { number: string } })
 	const nextPage = currentPage + 1;
 	const previousPage = currentPage - 1;
 
+	const analytics = await fetchAnalytics(site.id, thisPage);
+
 	return {
 		props: {
 			pageCount: pages,
@@ -70,6 +74,7 @@ export async function getStaticProps({ params }: { params: { number: string } })
 			entries: changelogs.filter((c) => thisPage.includes(c.id)),
 			currentPage,
 			site,
+			analytics,
 		},
 	};
 }

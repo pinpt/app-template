@@ -53,6 +53,7 @@ export default function Search(props: SearchProps) {
 			searchTags={tags}
 			handleRemoveFromQuery={handleRemoveFromQuery}
 			handleAddTagToQuery={handleAddToQuery}
+			renderCardStatistics={() => <></>}
 		/>
 	);
 }
