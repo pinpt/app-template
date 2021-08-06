@@ -1,5 +1,5 @@
 import { useRouter } from 'next/dist/client/router';
-import { ChangelogCard, Entry, fetchSite, Prebuilt, Site } from '@pinpt/react';
+import { Entry, fetchSite, Prebuilt, Site } from '@pinpt/react';
 import config from '../pinpoint.config';
 
 interface HomeProps {

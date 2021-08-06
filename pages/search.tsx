@@ -1,5 +1,4 @@
-import { ChangelogCard, fetchSite, Prebuilt, Site, useSearch } from '@pinpt/react';
-import { GetStaticPathsContext, GetStaticPropsContext } from 'next';
+import { fetchSite, Prebuilt, Site, useSearch } from '@pinpt/react';
 import { useRouter } from 'next/dist/client/router';
 import { useCallback } from 'react';
 import config from '../pinpoint.config';
