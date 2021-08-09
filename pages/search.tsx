@@ -1,68 +1,85 @@
 import NextHead from 'next/head';
+import { useRouter } from 'next/router';
+import { useCallback, useMemo } from 'react';
+import { fetchSite, Head, Prebuilt, useSearch } from '@pinpt/react';
 import config from '../pinpoint.config';
 
+import type { ISite } from '@pinpt/react';
 interface SearchProps {
-	// site: Site;
+	site: ISite;
 }
 
 export default function Search(props: SearchProps) {
-	// const router = useRouter();
-	// const tags = JSON.parse(decodeURIComponent((router?.query?.tags ?? '') as string) || '[]');
-	// const { results, loading } = useSearch((router?.query?.term ?? '') as string, tags, config.siteId);
+	const { site } = props;
+	const router = useRouter();
+	const tags = JSON.parse(decodeURIComponent((router?.query?.tags ?? '') as string) || '[]');
+	const term = (router?.query?.term as string) ?? '';
+	const { results, loading } = useSearch(term, tags, config.siteId);
 
-	// const handleRemoveFromQuery = useCallback(
-	// 	(term: string, clear: boolean) => {
-	// 		console.log(term, tags);
-	// 		if (clear) {
-	// 			router.push('/');
-	// 		} else {
-	// 			const idx = tags.indexOf(term);
-	// 			if (idx >= 0) {
-	// 				const res = [...tags];
-	// 				res.splice(idx, 1);
-	// 				if (res.length === 0) {
-	// 					router.push('/');
-	// 				} else {
-	// 					router.push(`/search?tags=${encodeURIComponent(JSON.stringify(res))}`);
-	// 				}
-	// 			}
-	// 		}
-	// 	},
-	// 	[router, tags]
-	// );
+	const handleRemoveFromQuery = useCallback(
+		(term: string, clear: boolean) => {
+			console.log(term, tags);
+			if (clear) {
+				router.push('/');
+			} else {
+				const idx = tags.indexOf(term);
+				if (idx >= 0) {
+					const res = [...tags];
+					res.splice(idx, 1);
+					if (res.length === 0) {
+						router.push('/');
+					} else {
+						router.push(`/search?tags=${encodeURIComponent(JSON.stringify(res))}`);
+					}
+				}
+			}
+		},
+		[router, tags]
+	);
 
-	// const handleAddToQuery = useCallback(
-	// 	(term: string) => {
-	// 		if (!tags.includes(term)) {
-	// 			router.push(`/search?tags=${encodeURIComponent(JSON.stringify([...tags, term]))}`);
-	// 		}
-	// 	},
-	// 	[router, tags]
-	// );
+	const handleAddToQuery = useCallback(
+		(term: string) => {
+			if (!tags.includes(term)) {
+				router.push(`/search?tags=${encodeURIComponent(JSON.stringify([...tags, term]))}`);
+			}
+		},
+		[router, tags]
+	);
 
-	// return (
-	// 	<Prebuilt.SearchResults
-	// 		site={props.site}
-	// 		entries={results}
-	// 		handleSelectEntry={(id) => router.push(`/entry/${id}`)}
-	// 		handleSearch={(value) => router.push(`/search?term=${value}`)}
-	// 		loading={loading}
-	// 		searchTerm={(router?.query?.term ?? '') as string}
-	// 		searchTags={tags}
-	// 		handleRemoveFromQuery={handleRemoveFromQuery}
-	// 		handleAddTagToQuery={handleAddToQuery}
-	// 		renderCardStatistics={() => <></>}
-	// 	/>
-	// );
-	return <div>TODO</div>;
+	const title = useMemo(
+		() => `Search results for ${tags.length ? tags.join(' AND ') : term} - ${site.theme?.title ?? site.name}`,
+		[tags, term, site]
+	);
+
+	return (
+		<>
+			<NextHead>
+				<title>{title}</title>
+				<Head site={site} />
+			</NextHead>
+
+			<Prebuilt.SearchResults
+				site={props.site}
+				entries={results}
+				handleSelectContent={(content) => router.push(new URL(content.url).pathname)}
+				handleSearch={(value) => router.push(`/search?term=${value}`)}
+				loading={loading}
+				searchTerm={(router?.query?.term ?? '') as string}
+				searchTags={tags}
+				handleRemoveFromQuery={handleRemoveFromQuery}
+				handleAddTagToQuery={handleAddToQuery}
+				renderCardStatistics={() => <></>}
+			/>
+		</>
+	);
 }
 
 export async function getStaticProps() {
-	// const { site } = await fetchSite(config.slug);
+	const site = await fetchSite(config);
 	return {
 		props: {
-			// site,
+			site,
 		},
-		revalidate: 60, // TODO: set low and cache on proxy
+		revalidate: 600 * 5,
 	};
 }
