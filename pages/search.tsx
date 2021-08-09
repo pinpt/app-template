@@ -63,6 +63,7 @@ export default function Search(props: SearchProps) {
 				entries={results}
 				handleSelectContent={(content) => router.push(new URL(content.url).pathname)}
 				handleSearch={(value) => router.push(`/search?term=${value}`)}
+				handleSelectHome={() => router.push('/')}
 				loading={loading}
 				searchTerm={(router?.query?.term ?? '') as string}
 				searchTags={tags}
