@@ -57,6 +57,7 @@ export default function EntryPage(props: EntryPageProps) {
 				clapCount={totalCount}
 				sessionClapCount={sessionCount}
 				handleSelectHome={() => router.push('/')}
+				handleSearch={(value) => router.push(`/search?term=${value}`)}
 			/>
 		</>
 	);
