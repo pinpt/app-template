@@ -1,0 +1,66 @@
+const { apihost, siteId } = require('./pinpoint.config.js');
+const homeurl = (apihost || '').includes('.edge.') ? `https://home.edge.pinpoint.com` : `https://home.pinpoint.com`;
+
+// NOTE: these rewrites are important to allow you to run the application
+// in development as well as outside the pinpoint cloud.
+const apiRewrites = {
+	beforeFiles: [
+		{
+			source: '/site-api/v1/site',
+			destination: `https://${apihost}/site/v1/${siteId}`,
+		},
+		{
+			source: '/site-api/v1/site/:slug*',
+			destination: `https://${apihost}/site/v1/${siteId}/:slug*`,
+		},
+		{
+			source: '/site-api/v1/content',
+			destination: `https://${apihost}/content/v1/${siteId}`,
+		},
+		{
+			source: '/site-api/v1/content/:slug*',
+			destination: `https://${apihost}/content/v1/${siteId}/:slug*`,
+		},
+		{
+			source: '/subscription/subscribe',
+			destination: `${homeurl}/subscription/subscribe/${siteId}`,
+		},
+		{
+			source: '/rss',
+			destination: `https://${apihost}/rss/${siteId}`,
+		},
+		{
+			source: '/a.js',
+			destination: `https://cdn.pinpoint.com/beacon/index.min.js`,
+		},
+	],
+	afterFiles: [],
+	fallback: [],
+};
+
+const createRewriteWrapper = (rewrites) => {
+	return async () => {
+		// invoke the original rewrite (if any)
+		const _rewrites = rewrites ? await rewrites() : {};
+		// merge in our rewrites + your rewrites
+		let _a = _rewrites;
+		if (Array.isArray(_rewrites)) {
+			_a = { beforeFiles: _rewrites, afterFiles: [], fallback: [] };
+		}
+		let _b = { ...apiRewrites };
+		const dest = {
+			fallback: [...(_b.fallback || []), ...(_a.fallback || [])],
+			beforeFiles: [...(_b.beforeFiles || []), ...(_a.beforeFiles || [])],
+			afterFiles: [...(_b.afterFiles || []), ...(_a.afterFiles || [])],
+		};
+		return dest;
+	};
+};
+
+const withPinpointConfig = (config) => {
+	const _config = { ...config };
+	_config.rewrites = createRewriteWrapper(_config.rewrites);
+	return _config;
+};
+
+module.exports = withPinpointConfig;

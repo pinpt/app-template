@@ -1,47 +1,70 @@
-import { useRouter } from 'next/dist/client/router';
-import { Analytics, Entry, fetchAnalytics, fetchSite, Prebuilt, Site } from '@pinpt/react';
+import NextHead from 'next/head';
+import { useRouter } from 'next/router';
+import {
+	Analytics, fetchAnalytics, fetchContentPaginated, fetchSiteWithContentCount, Head, Prebuilt
+} from '@pinpt/react';
 import config from '../pinpoint.config';
 
+import type { IContent, ISite } from '@pinpt/react';
+
 interface HomeProps {
-	site: Site;
-	entries: Entry[];
-	showNextPage: boolean;
+	site: ISite;
+	content: IContent[];
+	after?: IContent;
 	analytics: Analytics;
+	pageCount: number;
 }
 
 export default function Home(props: HomeProps) {
-	const { site, entries, showNextPage, analytics } = props;
+	const { site, content, after, analytics, pageCount } = props;
 	const router = useRouter();
+	const title = site.theme?.description ? `${site.theme.description} - ${site.name}` : site.name;
 
 	return (
-		<Prebuilt.Home
-			entries={entries}
-			site={site}
-			latestCount={2}
-			handleSelectEntry={(id) => router.push(`/entry/${id}`)}
-			handleSearch={(value) => router.push(`/search?term=${value}`)}
-			handleAddTagToQuery={(value) => router.push(`/search?tags=${encodeURIComponent(JSON.stringify([value]))}`)}
-			pageForward={showNextPage ? () => router.push(`/page/2`) : undefined}
-			analytics={analytics}
-		/>
+		<>
+			<NextHead>
+				<title>{title}</title>
+				<Head site={site} />
+			</NextHead>
+			<Prebuilt.Home
+				entries={content}
+				site={site}
+				latestCount={1}
+				handleSelectContent={(content) => router.push(new URL(content.url).pathname)}
+				handleSearch={(value) => router.push(`/search?term=${value}`)}
+				handleAddTagToQuery={(value) => router.push(`/search?tags=${encodeURIComponent(JSON.stringify([value]))}`)}
+				pageForward={after ? () => router.push(`/entries/2/${after.dateAt}/${pageCount}`) : undefined}
+				analytics={analytics}
+			/>
+		</>
 	);
 }
 
 export async function getStaticProps() {
-	const { site, changelogs } = await fetchSite(config.slug);
-	const entries = changelogs.slice(0, config.pageSize);
-	const analytics = await fetchAnalytics(
-		site.id,
-		entries.map((e) => e.id)
-	);
+	const { site, content, after } = await fetchContentPaginated(config, {
+		limit: config.pageSize,
+		after: true,
+		site: true,
+	});
 
-	const showNextPage = changelogs.length > config.pageSize;
+	const [{ count }, analytics] = await Promise.all([
+		fetchSiteWithContentCount(config),
+		fetchAnalytics(
+			config,
+			content.map((e) => e.id)
+		),
+	]);
+
+	const pageCount = Math.ceil(count / config.pageSize);
+
 	return {
 		props: {
 			site,
-			entries,
-			showNextPage,
+			content,
+			after,
 			analytics,
+			pageCount,
 		},
+		revalidate: 60, // TODO: set low and cache on proxy
 	};
 }

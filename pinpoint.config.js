@@ -1,5 +1,6 @@
 module.exports = {
 	slug: 'pinpoint',
 	siteId: 'PirxVTE94u3YmGNOySRY',
-	pageSize: 6,
+	apihost: 'api.pinpoint.com',
+	pageSize: 11,
 };

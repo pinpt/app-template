@@ -1,5 +1,5 @@
 {
-	"name": "__SLUG__",
+	"name": "@pinpt/app-template",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
@@ -14,7 +14,7 @@
 	},
 	"dependencies": {
 		"@pinpt/cli": "^0.0.6",
-		"@pinpt/react": "^0.3.27",
+		"@pinpt/react": "0.4.11",
 		"encoding": "^0.1.13",
 		"next": "11.0.1",
 		"react": "17.0.2",
