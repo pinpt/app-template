@@ -24,18 +24,19 @@ export default function EntryPage(props: EntryPageProps) {
 	const contentId = content.id;
 
 	useEffect(() => {
-		fetchContentAnalytics(config, contentId).then(({ claps }) => {
+		fetchContentAnalytics(config, contentId).then(({ claps }: { claps: number }) => {
 			setTotalCount(claps);
 		});
 	}, [contentId]);
 
 	const onClap = useCallback(
-		async (entry: IContent) => {
+		(entry: IContent) => {
 			if (!maxed) {
-				const res = await createClap(config, entry.id);
-				setSessionCount(res.sessionCount);
-				setTotalCount(res.count);
-				setMaxed(res.max);
+				createClap(config, entry.id).then((res: { sessionCount: number; count: number; max: boolean }) => {
+					setSessionCount(res.sessionCount);
+					setTotalCount(res.count);
+					setMaxed(res.max);
+				});
 			}
 		},
 		[maxed]
