@@ -17,7 +17,7 @@ class MyDocument extends Document {
 						href="https://fonts.googleapis.com/css?family=Inter:300,400,500,700&amp;display=swap"
 					/>
 				</Head>
-				<body>
+				<body className="preload">
 					<Main />
 					<NextScript />
 				</body>
