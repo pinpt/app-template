@@ -1,9 +1,7 @@
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
-import {
-	createClap, fetchContent, fetchContentAnalytics, fetchContentPaginated, Head, Prebuilt
-} from '@pinpt/react';
+import { createClap, fetchContent, fetchContentAnalytics, fetchContentPaginated, Head, Prebuilt } from '@pinpt/react';
 import config from '../../pinpoint.config';
 
 import type { IContent, ISite } from '@pinpt/react';
@@ -17,7 +15,7 @@ interface EntryPageProps {
 
 export default function EntryPage(props: EntryPageProps) {
 	const router = useRouter();
-	const { content, site } = props;
+	const { content, site, before, after } = props;
 	const [sessionCount, setSessionCount] = useState(0);
 	const [totalCount, setTotalCount] = useState(0);
 	const [maxed, setMaxed] = useState(false);
@@ -58,6 +56,9 @@ export default function EntryPage(props: EntryPageProps) {
 				sessionClapCount={sessionCount}
 				handleSelectHome={() => router.push('/')}
 				handleSearch={(value) => router.push(`/search?term=${value}`)}
+				nextEntry={after}
+				previousEntry={before}
+				handleSelectEntry={(content) => router.push(new URL(content.url).pathname)}
 			/>
 		</>
 	);
