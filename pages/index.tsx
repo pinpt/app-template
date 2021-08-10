@@ -1,7 +1,12 @@
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import {
-	Analytics, fetchAnalytics, fetchContentPaginated, fetchSiteWithContentCount, Head, Prebuilt
+	Analytics,
+	fetchAnalytics,
+	fetchContentPaginated,
+	fetchSiteWithContentCount,
+	Head,
+	Prebuilt,
 } from '@pinpt/react';
 import config from '../pinpoint.config';
 

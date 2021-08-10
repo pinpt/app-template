@@ -14,7 +14,7 @@
 	},
 	"dependencies": {
 		"@pinpt/cli": "^0.0.6",
-		"@pinpt/react": "^0.4.21",
+		"@pinpt/react": "^0.4.22",
 		"encoding": "^0.1.13",
 		"next": "11.0.1",
 		"react": "17.0.2",
