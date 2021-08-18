@@ -50,7 +50,7 @@ async function pinpointHeaders() {
 			// this header is used by the pinpoint proxy to increase cachability of content at the edge proxies w/o messing with the client or intermediate caches
 			{
 				key: 'x-proxy-cache-control',
-				value: 's-max-age=432000', // 5 days in seconds
+				value: 's-maxage=432000', // 5 days in seconds
 			},
 			// keep the client cache low so we can make updates
 			{
