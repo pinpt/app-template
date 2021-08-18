@@ -1,0 +1,78 @@
+/*
+ * Override default theme
+ */
+
+/* regular theme */
+:root {
+	/*
+	 * global
+	 */
+	/* --page-bg-color: white; */
+	/* --page-text-color: #3f3f46; */
+	/* --page-secondary-text-color: #a1a1aa; */
+	/* --page-highlight-color: #6366f1; */
+	/* --page-error-color: #dc2626; */
+
+	/*
+	 * header
+	 */
+	/* --header-bg-color: var(--page-bg-color); */
+	/* --header-title-color: var(--page-text-color); */
+	/* --header-description-color: var(--page-secondary-text-color); */
+	/* --header-subscribe-color: var(--page-highlight-color); */
+	/* --header-control-color: #d4d4d8; */
+
+	/*
+	 * content section
+	 */
+	/* --section-bg-color: #fafafa; */
+	/* --section-border-color: #e4e4e7; */
+
+	/*
+	 * content card
+	 */
+	/* --card-bg-color: white; */
+	/* --card-title-color: var(--page-text-color); */
+	/* --card-date-color: var(--page-secondary-text-color); */
+	/* --card-summary-color: #71717a; */
+	/* --card-info-color: var(--page-secondary-text-color); */
+	/* --card-link-color: var(--page-highlight-color); */
+	/* --card-empty-gradient-from: #4338ca; */
+	/* --card-empty-gradient-to: #6366f1; */
+
+	/*
+	 * article
+	 */
+	/* --article-bg-color: var(--page-bg-color); */
+	/* --article-text-color: var(--page-text-color); */
+	/* --article-info-color: #71717a; */
+	/* --article-link-color: var(--page-highlight-color); */
+	/* --article-border-color: transparent; */
+	/* --article-block-bg-color: var(--section-bg-color); */
+
+	/*
+	 * footer
+	 */
+	/* --footer-bg-color: #18181b; */
+	/* --footer-text-color: #71717a; */
+}
+
+/* dark theme override */
+.dark:root {
+	/* --page-bg-color: #18181b; */
+	/* --page-text-color: #f4f4f5; */
+	/* --page-secondary-text-color: #a1a1aa; */
+	/* --page-highlight-color: #818cf8; */
+
+	/* --header-control-color: #71717a; */
+
+	/* --section-bg-color: #202023; */
+	/* --section-border-color: #3f3f46; */
+
+	/* --card-bg-color: #27272a; */
+	/* --card-summary-color: #d4d4d8; */
+
+	/* --article-info-color: #d4d4d8; */
+
+	/* --footer-bg-color: black; */
+}
