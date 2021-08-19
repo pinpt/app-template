@@ -10,7 +10,7 @@ const NotFoundError = (props: NotFoundErrorProps) => {
 	const { site } = props;
 	const router = useRouter();
 
-	return <Prebuilt.Error.NotFound site={site} handleLinkClick={() => router.push('/')} />;
+	return <Prebuilt.Error.InternalServerError site={site} handleLinkClick={() => router.push('/')} />;
 };
 
 export async function getStaticProps() {

@@ -6,9 +6,7 @@ export interface FooterProps {
 
 const Footer = (props: FooterProps) => {
 	const { site } = props;
-	return (
-		<Prebuilt.Footer site={site} />
-	);
+	return <Prebuilt.Footer site={site} />;
 };
 
 export default Footer;

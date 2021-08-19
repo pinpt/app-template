@@ -10,7 +10,7 @@ import {
 	Head,
 	IContent,
 	ISite,
-	Prebuilt
+	Prebuilt,
 } from '@pinpt/react';
 import config from '../../pinpoint.config';
 import Header from '../../components/Header';
