@@ -2,11 +2,19 @@ import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import {
-	Banner, createClap, fetchContent, fetchContentAnalytics, fetchContentPaginated, Head, Prebuilt
+	Banner,
+	createClap,
+	fetchContent,
+	fetchContentAnalytics,
+	fetchContentPaginated,
+	Head,
+	IContent,
+	ISite,
+	Prebuilt
 } from '@pinpt/react';
 import config from '../../pinpoint.config';
-
-import type { IContent, ISite } from '@pinpt/react';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 interface EntryPageProps {
 	content: IContent;
@@ -62,11 +70,11 @@ export default function EntryPage(props: EntryPageProps) {
 				onClap={onClap}
 				clapCount={totalCount}
 				sessionClapCount={sessionCount}
-				handleSelectHome={() => router.push('/')}
-				handleSearch={(value) => router.push(`/search?term=${value}`)}
 				nextEntry={after}
 				previousEntry={before}
 				handleSelectEntry={(content) => router.push(new URL(content.url).pathname)}
+				renderHeader={(site) => <Header site={site} />}
+				renderFooter={(site) => <Footer site={site} />}
 			/>
 		</>
 	);
