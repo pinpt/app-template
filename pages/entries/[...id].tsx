@@ -6,11 +6,13 @@ import {
 	fetchContentPaginated,
 	fetchSiteWithContentCount,
 	Head,
+	IContent,
+	ISite,
 	Prebuilt,
 } from '@pinpt/react';
 import config from '../../pinpoint.config';
-
-import type { ISite, IContent } from '@pinpt/react';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 interface PageProps {
 	pageNumber: number;
@@ -49,6 +51,8 @@ export default function Page(props: PageProps) {
 				pageNumber={pageNumber}
 				pageCount={pageCount}
 				analytics={analytics}
+				renderHeader={(site) => <Header site={site} />}
+				renderFooter={(site) => <Footer site={site} />}
 			/>
 		</>
 	);

@@ -6,11 +6,13 @@ import {
 	fetchContentPaginated,
 	fetchSiteWithContentCount,
 	Head,
+	IContent,
+	ISite,
 	Prebuilt,
 } from '@pinpt/react';
 import config from '../pinpoint.config';
-
-import type { IContent, ISite } from '@pinpt/react';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 interface HomeProps {
 	site: ISite;
@@ -36,10 +38,11 @@ export default function Home(props: HomeProps) {
 				site={site}
 				latestCount={1}
 				handleSelectContent={(content) => router.push(new URL(content.url).pathname)}
-				handleSearch={(value) => router.push(`/search?term=${value}`)}
 				handleAddTagToQuery={(value) => router.push(`/search?tags=${encodeURIComponent(JSON.stringify([value]))}`)}
 				pageForward={after ? () => router.push(`/entries/2/${after.dateAt}/${pageCount}`) : undefined}
 				analytics={analytics}
+				renderHeader={(site) => <Header site={site} />}
+				renderFooter={(site) => <Footer site={site} />}
 			/>
 		</>
 	);
