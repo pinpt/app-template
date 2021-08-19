@@ -6,7 +6,7 @@ export interface NotFoundErrorProps {
 	site: ISite;
 }
 
-const NotFoundError = (props: NotFoundErrorProps) => {
+const InternalServerError = (props: NotFoundErrorProps) => {
 	const { site } = props;
 	const router = useRouter();
 
@@ -23,4 +23,4 @@ export async function getStaticProps() {
 	};
 }
 
-export default NotFoundError;
+export default InternalServerError;
