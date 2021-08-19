@@ -39,9 +39,7 @@ export default function Page(props: PageProps) {
 				site={site}
 				latestCount={0}
 				handleSelectContent={(c: IContent) => router.push(new URL(c.url).pathname)}
-				handleSearch={(value) => router.push(`/search?term=${value}`)}
 				handleAddTagToQuery={(value) => router.push(`/search?tags=${encodeURIComponent(JSON.stringify([value]))}`)}
-				handleSelectHome={() => router.push('/')}
 				pageForward={
 					after ? () => router.push(`/entries/${pageNumber + 1}/${after.dateAt}/${pageCount}`) : undefined
 				}

@@ -1,11 +1,11 @@
 import router from 'next/router';
 import { ISite, Prebuilt } from '@pinpt/react';
 
-export interface IHeaderProps {
+export interface HeaderProps {
 	site: ISite;
 }
 
-const Header = (props: IHeaderProps) => {
+const Header = (props: HeaderProps) => {
 	const { site } = props;
 	return (
 		<Prebuilt.Header

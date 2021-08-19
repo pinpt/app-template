@@ -70,7 +70,6 @@ export default function EntryPage(props: EntryPageProps) {
 				onClap={onClap}
 				clapCount={totalCount}
 				sessionClapCount={sessionCount}
-				handleSearch={(value) => router.push(`/search?term=${value}`)}
 				nextEntry={after}
 				previousEntry={before}
 				handleSelectEntry={(content) => router.push(new URL(content.url).pathname)}

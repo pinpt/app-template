@@ -3,6 +3,8 @@ import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { fetchSite, Head, Prebuilt, useSearch } from '@pinpt/react';
 import config from '../pinpoint.config';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 import type { ISite } from '@pinpt/react';
 interface SearchProps {
@@ -61,15 +63,18 @@ export default function Search(props: SearchProps) {
 			<Prebuilt.SearchResults
 				site={props.site}
 				entries={results}
-				handleSelectContent={(content) => router.push(new URL(content.url).pathname)}
-				handleSearch={(value) => router.push(`/search?term=${value}`)}
-				handleSelectHome={() => router.push('/')}
+				handleSelectContent={(content) => {
+					console.log('Hello', content);
+					router.push(new URL(content.url).pathname);
+				}}
 				loading={loading}
 				searchTerm={(router?.query?.term ?? '') as string}
 				searchTags={tags}
 				handleRemoveFromQuery={handleRemoveFromQuery}
 				handleAddTagToQuery={handleAddToQuery}
 				renderCardStatistics={() => <></>}
+				renderHeader={(site) => <Header site={site} />}
+				renderFooter={(site) => <Footer site={site} />}
 			/>
 		</>
 	);
