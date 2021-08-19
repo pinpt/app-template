@@ -42,10 +42,12 @@ export default function Page(props: PageProps) {
 				handleSearch={(value) => router.push(`/search?term=${value}`)}
 				handleAddTagToQuery={(value) => router.push(`/search?tags=${encodeURIComponent(JSON.stringify([value]))}`)}
 				handleSelectHome={() => router.push('/')}
-				pageForward={after ? () => router.push(`/entries/${after.dateAt}/${pageCount}`) : undefined}
+				pageForward={
+					after ? () => router.push(`/entries/${pageNumber + 1}/${after.dateAt}/${pageCount}`) : undefined
+				}
 				pageBack={
 					pageNumber > 2 && before
-						? () => router.push(`/entries/${before.dateAt}/${pageCount}`)
+						? () => router.push(`/entries/${pageNumber - 1}/${before.dateAt}/${pageCount}`)
 						: () => router.push('/')
 				}
 				pageNumber={pageNumber}

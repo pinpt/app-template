@@ -38,6 +38,39 @@ const apiRewrites = {
 	fallback: [],
 };
 
+const cacheableRoutes = ['/', '/search', '/entry/(.*)', '/entries/(.*)'];
+
+async function pinpointHeaders() {
+	if (process.env.NODE_ENV !== 'production') {
+		return [];
+	}
+	return cacheableRoutes.map((source) => ({
+		source,
+		headers: [
+			// this header is used by the pinpoint proxy to increase cachability of content at the edge proxies w/o messing with the client or intermediate caches
+			{
+				key: 'x-proxy-cache-control',
+				value: 's-maxage=432000', // 5 days in seconds
+			},
+			// keep the client cache low so we can make updates
+			{
+				key: 'cache-control',
+				value: 'public, max-age=60, stale-while-revalidate=180',
+			},
+		],
+	}));
+}
+
+const createHeaderWrapper = (headers) => {
+	return async () => {
+		// invoke the original headers (if any)
+		const _headers = headers ? await headers() : [];
+		const _ourheaders = await pinpointHeaders();
+		// merge in our headers + your headers
+		return [..._ourheaders, ..._headers];
+	};
+};
+
 const createRewriteWrapper = (rewrites) => {
 	return async () => {
 		// invoke the original rewrite (if any)
@@ -59,6 +92,7 @@ const createRewriteWrapper = (rewrites) => {
 
 const withPinpointConfig = (config) => {
 	const _config = { ...config };
+	_config.headers = createHeaderWrapper(_config.headers);
 	_config.rewrites = createRewriteWrapper(_config.rewrites);
 	return _config;
 };

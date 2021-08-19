@@ -2,6 +2,7 @@ import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import {
+	Banner,
 	createClap,
 	fetchContent,
 	fetchContentAnalytics,
@@ -20,11 +21,16 @@ interface EntryPageProps {
 	before: IContent;
 	after: IContent;
 	site: ISite;
+	preview?: boolean;
 }
+
+const PreviewBanner = () => {
+	return <Banner message="You are viewing an unpublished preview of your page" />;
+};
 
 export default function EntryPage(props: EntryPageProps) {
 	const router = useRouter();
-	const { content, site, before, after } = props;
+	const { content, site, before, after, preview } = props;
 	const [sessionCount, setSessionCount] = useState(0);
 	const [totalCount, setTotalCount] = useState(0);
 	const [maxed, setMaxed] = useState(false);
@@ -57,6 +63,7 @@ export default function EntryPage(props: EntryPageProps) {
 				</title>
 				<Head site={site} content={content} />
 			</NextHead>
+			{preview && <PreviewBanner />}
 			<Prebuilt.Entry
 				content={content}
 				site={site}
@@ -87,11 +94,20 @@ export async function getStaticPaths() {
 	};
 }
 
-export async function getStaticProps({ params }: { params: { id: string; title: string } }) {
+export async function getStaticProps({
+	params,
+	preview,
+	previewData,
+}: {
+	params: { id: string; title: string };
+	preview?: boolean;
+	previewData?: any;
+}) {
 	const { content, before, after, site } = await fetchContent(config, params.id[0], {
 		before: true,
 		after: true,
 		site: true,
+		commit: preview ? previewData?.commit : undefined,
 	});
 
 	return {
@@ -100,6 +116,7 @@ export async function getStaticProps({ params }: { params: { id: string; title: 
 			site,
 			before,
 			after,
+			preview: !!preview,
 		},
 		revalidate: 60, // TODO: set low and cache on proxy
 	};
