@@ -1,6 +1,6 @@
 module.exports = {
-	slug: 'pinpoint',
-	siteId: 'PirxVTE94u3YmGNOySRY',
+	slug: 'jeff',
+	siteId: 'X0iheYf0hUUTRed9KVfv',
 	apihost: 'api.pinpoint.com',
 	pageSize: 11,
 };
