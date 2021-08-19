@@ -63,10 +63,7 @@ export default function Search(props: SearchProps) {
 			<Prebuilt.SearchResults
 				site={props.site}
 				entries={results}
-				handleSelectContent={(content) => {
-					console.log('Hello', content);
-					router.push(new URL(content.url).pathname);
-				}}
+				handleSelectContent={(content) => router.push(new URL(content.url).pathname)}
 				loading={loading}
 				searchTerm={(router?.query?.term ?? '') as string}
 				searchTags={tags}
