@@ -40,25 +40,51 @@ const apiRewrites = {
 
 const cacheableRoutes = ['/', '/search', '/entry/(.*)', '/entries/(.*)'];
 
+const securityHeaders = [
+	{
+		key: 'X-DNS-Prefetch-Control',
+		value: 'on',
+	},
+	{
+		key: 'Strict-Transport-Security',
+		value: 'max-age=63072000; includeSubDomains; preload',
+	},
+	{
+		key: 'X-XSS-Protection',
+		value: '1; mode=block',
+	},
+	{
+		key: 'X-Frame-Options',
+		value: 'SAMEORIGIN',
+	},
+	{
+		key: 'X-Content-Type-Options',
+		value: 'nosniff',
+	},
+];
+
 async function pinpointHeaders() {
 	if (process.env.NODE_ENV !== 'production') {
 		return [];
 	}
-	return cacheableRoutes.map((source) => ({
-		source,
-		headers: [
-			// this header is used by the pinpoint proxy to increase cachability of content at the edge proxies w/o messing with the client or intermediate caches
-			{
-				key: 'x-proxy-cache-control',
-				value: 's-maxage=432000', // 5 days in seconds
-			},
-			// keep the client cache low so we can make updates
-			{
-				key: 'cache-control',
-				value: 'public, max-age=60, stale-while-revalidate=180',
-			},
-		],
-	}));
+	return [
+		...securityHeaders,
+		cacheableRoutes.map((source) => ({
+			source,
+			headers: [
+				// this header is used by the pinpoint proxy to increase cachability of content at the edge proxies w/o messing with the client or intermediate caches
+				{
+					key: 'x-proxy-cache-control',
+					value: 's-maxage=432000', // 5 days in seconds
+				},
+				// keep the client cache low so we can make updates
+				{
+					key: 'cache-control',
+					value: 'public, max-age=60, stale-while-revalidate=180',
+				},
+			],
+		})),
+	];
 }
 
 const createHeaderWrapper = (headers) => {
