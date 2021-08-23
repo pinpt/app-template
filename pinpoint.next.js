@@ -69,7 +69,7 @@ async function pinpointHeaders() {
 	}
 	return [
 		// Apply these headers to all routes in your application.
-		[...{ source: '/(.*)', headers: securityHeaders }],
+		...[{ source: '/(.*)', headers: securityHeaders }],
 		...cacheableRoutes.map((source) => ({
 			source,
 			headers: [
