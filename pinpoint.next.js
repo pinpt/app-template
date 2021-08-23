@@ -68,8 +68,9 @@ async function pinpointHeaders() {
 		return [];
 	}
 	return [
-		...securityHeaders,
-		cacheableRoutes.map((source) => ({
+		// Apply these headers to all routes in your application.
+		[...{ source: '/(.*)', headers: securityHeaders }],
+		...cacheableRoutes.map((source) => ({
 			source,
 			headers: [
 				// this header is used by the pinpoint proxy to increase cachability of content at the edge proxies w/o messing with the client or intermediate caches
