@@ -39,3 +39,7 @@ npx create-pinpoint-app
 # or
 yarn create pinpoint-app
 ```
+
+## Automatic Deployment with GitHub Actions
+
+If you navigate to the dashboard and go to Settings and API Keys, generate a new API Key (must not be readonly). Copy the key value and create a GitHub Secret named `PINPOINT_API_KEY` with the value. Now, each time you merge your code to master, it will automatically deploy your site changes.
