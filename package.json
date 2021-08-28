@@ -1,6 +1,6 @@
 {
 	"name": "@pinpt/app-template",
-	"version": "0.1.13",
+	"version": "0.1.14",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
@@ -13,9 +13,9 @@
 		"deploy": "pinpt deploy"
 	},
 	"dependencies": {
-		"@pinpt/cli": "^0.0.9",
+		"@pinpt/cli": "^1.0.1",
 		"@pinpt/email": "^0.0.8",
-		"@pinpt/react": "^0.6.4",
+		"@pinpt/react": "^0.6.5",
 		"encoding": "^0.1.13",
 		"next": "11.1.0",
 		"react": "17.0.2",
