@@ -12,9 +12,9 @@ import {
 	ISite,
 	Prebuilt,
 } from '@pinpt/react';
-import config from '../../pinpoint.config';
-import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import Header from '../../components/Header';
+import config from '../../pinpoint.config';
 
 interface EntryPageProps {
 	content: IContent;
@@ -117,6 +117,6 @@ export async function getStaticProps({
 			after,
 			preview: !!preview,
 		},
-		revalidate: 60, // TODO: set low and cache on proxy
+		revalidate: 1,
 	};
 }
