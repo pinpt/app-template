@@ -2,9 +2,9 @@ import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
 import { fetchSite, Head, Prebuilt, useSearch } from '@pinpt/react';
-import config from '../pinpoint.config';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
+import config from '../pinpoint.config';
 
 import type { ISite } from '@pinpt/react';
 interface SearchProps {
@@ -77,12 +77,11 @@ export default function Search(props: SearchProps) {
 	);
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 	const site = await fetchSite(config);
 	return {
 		props: {
 			site,
 		},
-		revalidate: 600 * 5,
 	};
 }

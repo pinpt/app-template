@@ -10,9 +10,9 @@ import {
 	ISite,
 	Prebuilt,
 } from '@pinpt/react';
-import config from '../pinpoint.config';
-import Header from '../components/Header';
 import Footer from '../components/Footer';
+import Header from '../components/Header';
+import config from '../pinpoint.config';
 
 interface HomeProps {
 	site: ISite;
@@ -48,7 +48,7 @@ export default function Home(props: HomeProps) {
 	);
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
 	const { site, content, after } = await fetchContentPaginated(config, {
 		limit: config.pageSize,
 		after: true,
@@ -73,6 +73,5 @@ export async function getStaticProps() {
 			analytics,
 			pageCount,
 		},
-		revalidate: 60, // TODO: set low and cache on proxy
 	};
 }

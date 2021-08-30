@@ -78,11 +78,6 @@ async function pinpointHeaders() {
 					key: 'x-proxy-cache-control',
 					value: 's-maxage=432000', // 5 days in seconds
 				},
-				// keep the client cache low so we can make updates
-				{
-					key: 'cache-control',
-					value: 'public, max-age=60, stale-while-revalidate=180',
-				},
 			],
 		})),
 	];
