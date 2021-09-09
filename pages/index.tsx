@@ -8,7 +8,7 @@ import {
 	Head,
 	IContent,
 	ISite,
-	Prebuilt,
+	PrebuiltHome,
 } from '@pinpt/react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -33,7 +33,7 @@ export default function Home(props: HomeProps) {
 				<title>{title}</title>
 				<Head site={site} />
 			</NextHead>
-			<Prebuilt.Home
+			<PrebuiltHome
 				entries={content}
 				site={site}
 				latestCount={1}

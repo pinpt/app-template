@@ -10,7 +10,7 @@ import {
 	Head,
 	IContent,
 	ISite,
-	Prebuilt,
+	PrebuiltEntry,
 } from '@pinpt/react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -64,7 +64,7 @@ export default function EntryPage(props: EntryPageProps) {
 				<Head site={site} content={content} />
 			</NextHead>
 			{preview && <PreviewBanner />}
-			<Prebuilt.Entry
+			<PrebuiltEntry
 				content={content}
 				site={site}
 				onClap={onClap}

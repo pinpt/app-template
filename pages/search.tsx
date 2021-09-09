@@ -1,7 +1,7 @@
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
-import { fetchSite, Head, Prebuilt, useSearch } from '@pinpt/react';
+import { fetchSite, Head, PrebuiltSearchResults, useSearch } from '@pinpt/react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import config from '../pinpoint.config';
@@ -60,7 +60,7 @@ export default function Search(props: SearchProps) {
 				<Head site={site} />
 			</NextHead>
 
-			<Prebuilt.SearchResults
+			<PrebuiltSearchResults
 				site={props.site}
 				entries={results}
 				handleSelectContent={(content) => router.push(new URL(content.url).pathname)}
