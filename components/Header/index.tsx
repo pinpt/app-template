@@ -1,5 +1,5 @@
 import router from 'next/router';
-import { ISite, Prebuilt } from '@pinpt/react';
+import { ISite, PrebuiltHeader } from '@pinpt/react';
 
 export interface HeaderProps {
 	site: ISite;
@@ -8,7 +8,7 @@ export interface HeaderProps {
 const Header = (props: HeaderProps) => {
 	const { site } = props;
 	return (
-		<Prebuilt.Header
+		<PrebuiltHeader
 			site={site}
 			handleSearch={(value) => router.push(`/search?term=${value}`)}
 			handleSelectHome={() => router.push('/')}

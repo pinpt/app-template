@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { fetchSite, ISite, Prebuilt } from '@pinpt/react';
+import { fetchSite, ISite, PrebuiltError } from '@pinpt/react';
 import config from '../pinpoint.config';
 import Footer from '../components/Footer';
 
@@ -12,7 +12,7 @@ const InternalServerError = (props: InternalServerErrorProps) => {
 	const router = useRouter();
 
 	return (
-		<Prebuilt.Error.InternalServerError
+		<PrebuiltError.InternalServerError
 			site={site}
 			handleLinkClick={() => router.push('/')}
 			renderFooter={(site) => <Footer site={site} />}

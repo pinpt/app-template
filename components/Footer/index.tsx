@@ -1,4 +1,4 @@
-import { ISite, Prebuilt } from '@pinpt/react';
+import { ISite, PrebuiltFooter } from '@pinpt/react';
 
 export interface FooterProps {
 	site: ISite;
@@ -6,7 +6,7 @@ export interface FooterProps {
 
 const Footer = (props: FooterProps) => {
 	const { site } = props;
-	return <Prebuilt.Footer site={site} />;
+	return <PrebuiltFooter site={site} />;
 };
 
 export default Footer;
