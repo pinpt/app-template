@@ -1,14 +1,8 @@
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import {
-	Analytics,
-	fetchAnalytics,
-	fetchContentPaginated,
-	fetchSiteWithContentCount,
-	Head,
-	IContent,
-	ISite,
-	PrebuiltHome,
+	Analytics, fetchAnalytics, fetchContentPaginated, fetchSiteWithContentCount,
+	getRouterRelativePath, Head, IContent, ISite, PrebuiltHome
 } from '@pinpt/react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -38,7 +32,7 @@ export default function Page(props: PageProps) {
 				entries={content}
 				site={site}
 				latestCount={0}
-				handleSelectContent={(c: IContent) => router.push(new URL(c.url).pathname)}
+				handleSelectContent={(c: IContent) => router.push(getRouterRelativePath(site, c.url))}
 				handleAddTagToQuery={(value) => router.push(`/search?tags=${encodeURIComponent(JSON.stringify([value]))}`)}
 				pageForward={
 					after ? () => router.push(`/entries/${pageNumber + 1}/${after.dateAt}/${pageCount}`) : undefined

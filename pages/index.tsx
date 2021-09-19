@@ -1,14 +1,8 @@
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import {
-	Analytics,
-	fetchAnalytics,
-	fetchContentPaginated,
-	fetchSiteWithContentCount,
-	Head,
-	IContent,
-	ISite,
-	PrebuiltHome,
+	Analytics, fetchAnalytics, fetchContentPaginated, fetchSiteWithContentCount,
+	getRouterRelativePath, Head, IContent, ISite, PrebuiltHome
 } from '@pinpt/react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -37,7 +31,7 @@ export default function Home(props: HomeProps) {
 				entries={content}
 				site={site}
 				latestCount={1}
-				handleSelectContent={(content) => router.push(new URL(content.url).pathname)}
+				handleSelectContent={(content) => router.push(getRouterRelativePath(site, content.url))}
 				handleAddTagToQuery={(value) => router.push(`/search?tags=${encodeURIComponent(JSON.stringify([value]))}`)}
 				pageForward={after ? () => router.push(`/entries/2/${after.dateAt}/${pageCount}`) : undefined}
 				analytics={analytics}

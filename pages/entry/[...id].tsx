@@ -2,15 +2,8 @@ import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import {
-	Banner,
-	createClap,
-	fetchContent,
-	fetchContentAnalytics,
-	fetchContentPaginated,
-	Head,
-	IContent,
-	ISite,
-	PrebuiltEntry,
+	Banner, createClap, fetchContent, fetchContentAnalytics, fetchContentPaginated,
+	getRouterRelativePath, Head, IContent, ISite, PrebuiltEntry, slugifyString
 } from '@pinpt/react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -72,7 +65,7 @@ export default function EntryPage(props: EntryPageProps) {
 				sessionClapCount={sessionCount}
 				nextEntry={after}
 				previousEntry={before}
-				handleSelectEntry={(content) => router.push(new URL(content.url).pathname)}
+				handleSelectEntry={(content) => router.push(getRouterRelativePath(site, content.url))}
 				renderHeader={(site) => <Header site={site} />}
 				renderFooter={(site) => <Footer site={site} />}
 			/>
@@ -86,7 +79,7 @@ export async function getStaticPaths() {
 	return {
 		paths: content.map(({ id, title }) => ({
 			params: {
-				id: [id, title],
+				id: [id, slugifyString(title)],
 			},
 		})),
 		fallback: 'blocking', // server render on-demand if page doesn't exist

@@ -1,5 +1,5 @@
-const fs = require('fs')
-const path = require('path')
+const fs = require('fs');
+const path = require('path');
 const { apihost, siteId } = require('./pinpoint.config.js');
 const homeurl = (apihost || '').includes('.edge.') ? `https://home.edge.pinpoint.com` : `https://home.pinpoint.com`;
 
@@ -12,7 +12,15 @@ const apiRewrites = {
 			destination: `https://${apihost}/site/v1/${siteId}`,
 		},
 		{
+			source: '/:any*/site-api/v1/site',
+			destination: `https://${apihost}/site/v1/${siteId}`,
+		},
+		{
 			source: '/site-api/v1/site/:slug*',
+			destination: `https://${apihost}/site/v1/${siteId}/:slug*`,
+		},
+		{
+			source: '/:any*/site-api/v1/site/:slug*',
 			destination: `https://${apihost}/site/v1/${siteId}/:slug*`,
 		},
 		{
@@ -20,7 +28,15 @@ const apiRewrites = {
 			destination: `https://${apihost}/content/v1/${siteId}`,
 		},
 		{
+			source: '/:any*/site-api/v1/content',
+			destination: `https://${apihost}/content/v1/${siteId}`,
+		},
+		{
 			source: '/site-api/v1/content/:slug*',
+			destination: `https://${apihost}/content/v1/${siteId}/:slug*`,
+		},
+		{
+			source: '/:any*/site-api/v1/content/:slug*',
 			destination: `https://${apihost}/content/v1/${siteId}/:slug*`,
 		},
 		{
@@ -28,11 +44,31 @@ const apiRewrites = {
 			destination: `${homeurl}/subscription/subscribe/${siteId}`,
 		},
 		{
+			source: '/:any*/subscription/subscribe',
+			destination: `${homeurl}/subscription/subscribe/${siteId}`,
+		},
+		{
+			source: '/api/event',
+			destination: `https://${apihost}/analytics/track`,
+		},
+		{
+			source: '/:any*/api/event',
+			destination: `https://${apihost}/analytics/track`,
+		},
+		{
 			source: '/rss',
 			destination: `https://${apihost}/rss/${siteId}`,
 		},
 		{
+			source: '/:any*/rss',
+			destination: `https://${apihost}/rss/${siteId}`,
+		},
+		{
 			source: '/a.js',
+			destination: `https://cdn.pinpoint.com/beacon/index.min.js`,
+		},
+		{
+			source: '/:any*/a.js',
 			destination: `https://cdn.pinpoint.com/beacon/index.min.js`,
 		},
 	],
@@ -114,6 +150,9 @@ const createRewriteWrapper = (rewrites) => {
 	};
 };
 
+/**
+ * @type {import('next').NextConfig}
+ */
 const withPinpointConfig = (config) => {
 	const _config = { ...config };
 	_config.headers = createHeaderWrapper(_config.headers);
