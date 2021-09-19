@@ -1,6 +1,6 @@
 {
 	"name": "@pinpt/app-template",
-	"version": "0.1.16",
+	"version": "0.1.17",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
@@ -24,12 +24,12 @@
 	"devDependencies": {
 		"@tailwindcss/aspect-ratio": "^0.2.1",
 		"@types/react": "17.0.15",
-		"autoprefixer": "^10.3.1",
+		"autoprefixer": "^10.3.4",
 		"eslint": "7.32.0",
 		"eslint-config-next": "11.0.1",
 		"postcss": "^8.3.6",
-		"prettier": "^2.3.2",
-		"tailwindcss": "^2.2.7",
+		"prettier": "^2.4.1",
+		"tailwindcss": "^2.2.15",
 		"typescript": "4.3.5"
 	}
 }
