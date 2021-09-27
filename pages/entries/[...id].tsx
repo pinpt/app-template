@@ -1,8 +1,8 @@
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import {
-	Analytics, fetchAnalytics, fetchContentPaginated, fetchSiteWithContentCount,
-	getRouterRelativePath, Head, IContent, ISite, PrebuiltHome
+	Analytics, fetchAnalytics, fetchContentPaginated, getRouterRelativePath, Head, IContent, ISite,
+	PrebuiltHome
 } from '@pinpt/react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -33,14 +33,24 @@ export default function Page(props: PageProps) {
 				site={site}
 				latestCount={0}
 				handleSelectContent={(c: IContent) => router.push(getRouterRelativePath(site, c.url))}
-				handleAddTagToQuery={(value) => router.push(`/search?tags=${encodeURIComponent(JSON.stringify([value]))}`)}
+				handleAddTagToQuery={(value) =>
+					router.push(getRouterRelativePath(site, `/search?tags=${encodeURIComponent(JSON.stringify([value]))}`))
+				}
 				pageForward={
-					after ? () => router.push(`/entries/${pageNumber + 1}/${after.dateAt}/${pageCount}`) : undefined
+					after
+						? () =>
+								router.push(
+									getRouterRelativePath(site, `/entries/${pageNumber + 1}/${after.dateAt}/${pageCount}`)
+								)
+						: undefined
 				}
 				pageBack={
 					pageNumber > 2 && before
-						? () => router.push(`/entries/${pageNumber - 1}/${before.dateAt}/${pageCount}`)
-						: () => router.push('/')
+						? () =>
+								router.push(
+									getRouterRelativePath(site, `/entries/${pageNumber - 1}/${before.dateAt}/${pageCount}`)
+								)
+						: () => router.push(getRouterRelativePath(site, '/'))
 				}
 				pageNumber={pageNumber}
 				pageCount={pageCount}
@@ -52,62 +62,42 @@ export default function Page(props: PageProps) {
 	);
 }
 
-export async function getStaticPaths() {
-	const { count } = await fetchSiteWithContentCount(config);
-	const pages = Math.ceil(count / config.pageSize);
-	const paths = [];
+export async function getServerSideProps({ params }: { params: { id: [string, string, string] } }) {
+	try {
+		const pageNumber = parseInt(params.id[0]);
+		const offset = parseInt(params.id[1] ?? '0');
+		const pageCount = parseInt(params.id[2] ?? '0');
 
-	let next = 0;
-
-	for (let i = 1; i <= pages; i++) {
 		const res = await fetchContentPaginated(config, {
-			offset: next,
+			offset,
 			limit: config.pageSize,
+			before: true,
 			after: true,
-			projection: ['id'],
+			site: true,
 		});
-		paths.push({
-			params: {
-				id: [`${i + 1}`, String(next), String(pages)],
+
+		const analytics = await fetchAnalytics(
+			config,
+			res.content.map((e) => e.id)
+		);
+
+		return {
+			props: {
+				site: res.site,
+				content: res.content,
+				before: res.before,
+				after: res.after,
+				pageNumber,
+				pageCount,
+				analytics,
 			},
-		});
-		next = res.after?.dateAt ?? 0;
+		};
+	} catch (ex: any) {
+		if (ex.code === 404) {
+			return {
+				notFound: true,
+			};
+		}
+		throw ex;
 	}
-
-	return {
-		paths,
-		fallback: 'blocking', // server render on-demand if page doesn't exist
-	};
-}
-
-export async function getStaticProps({ params }: { params: { id: [string, string, string] } }) {
-	const pageNumber = parseInt(params.id[0]);
-	const offset = parseInt(params.id[1] ?? '0');
-	const pageCount = parseInt(params.id[2] ?? '0');
-
-	const res = await fetchContentPaginated(config, {
-		offset,
-		limit: config.pageSize,
-		before: true,
-		after: true,
-		site: true,
-	});
-
-	const analytics = await fetchAnalytics(
-		config,
-		res.content.map((e) => e.id)
-	);
-
-	return {
-		props: {
-			site: res.site,
-			content: res.content,
-			before: res.before,
-			after: res.after,
-			pageNumber,
-			pageCount,
-			analytics,
-		},
-		revalidate: 1,
-	};
 }

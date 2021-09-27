@@ -24,30 +24,32 @@ export default function Search(props: SearchProps) {
 		(term: string, clear: boolean) => {
 			console.log(term, tags);
 			if (clear) {
-				router.push('/');
+				router.push(getRouterRelativePath(site, '/'));
 			} else {
 				const idx = tags.indexOf(term);
 				if (idx >= 0) {
 					const res = [...tags];
 					res.splice(idx, 1);
 					if (res.length === 0) {
-						router.push('/');
+						router.push(getRouterRelativePath(site, '/'));
 					} else {
-						router.push(`/search?tags=${encodeURIComponent(JSON.stringify(res))}`);
+						router.push(getRouterRelativePath(site, `/search?tags=${encodeURIComponent(JSON.stringify(res))}`));
 					}
 				}
 			}
 		},
-		[router, tags]
+		[router, tags, site]
 	);
 
 	const handleAddToQuery = useCallback(
 		(term: string) => {
 			if (!tags.includes(term)) {
-				router.push(`/search?tags=${encodeURIComponent(JSON.stringify([...tags, term]))}`);
+				router.push(
+					getRouterRelativePath(site, `/search?tags=${encodeURIComponent(JSON.stringify([...tags, term]))}`)
+				);
 			}
 		},
-		[router, tags]
+		[router, tags, site]
 	);
 
 	const title = useMemo(

@@ -32,8 +32,14 @@ export default function Home(props: HomeProps) {
 				site={site}
 				latestCount={1}
 				handleSelectContent={(content) => router.push(getRouterRelativePath(site, content.url))}
-				handleAddTagToQuery={(value) => router.push(`/search?tags=${encodeURIComponent(JSON.stringify([value]))}`)}
-				pageForward={after ? () => router.push(`/entries/2/${after.dateAt}/${pageCount}`) : undefined}
+				handleAddTagToQuery={(value) =>
+					router.push(getRouterRelativePath(site, `/search?tags=${encodeURIComponent(JSON.stringify([value]))}`))
+				}
+				pageForward={
+					after
+						? () => router.push(getRouterRelativePath(site, `/entries/2/${after.dateAt}/${pageCount}`))
+						: undefined
+				}
 				analytics={analytics}
 				renderHeader={(site) => <Header site={site} />}
 				renderFooter={(site) => <Footer site={site} />}
@@ -43,8 +49,9 @@ export default function Home(props: HomeProps) {
 }
 
 export async function getServerSideProps() {
+	const pageSize = config.pageSize ?? 11;
 	const { site, content, after } = await fetchContentPaginated(config, {
-		limit: config.pageSize,
+		limit: pageSize,
 		after: true,
 		site: true,
 	});
@@ -57,7 +64,7 @@ export async function getServerSideProps() {
 		),
 	]);
 
-	const pageCount = Math.ceil(count / config.pageSize);
+	const pageCount = Math.ceil(count / pageSize);
 
 	return {
 		props: {

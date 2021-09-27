@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
-import { fetchSite, ISite, PrebuiltError } from '@pinpt/react';
-import config from '../pinpoint.config';
+import { fetchSite, getRouterRelativePath, ISite, PrebuiltError } from '@pinpt/react';
 import Footer from '../components/Footer';
+import config from '../pinpoint.config';
 
 export interface NotFoundErrorProps {
 	site: ISite;
@@ -14,8 +14,8 @@ const NotFoundError = (props: NotFoundErrorProps) => {
 	return (
 		<PrebuiltError.NotFound
 			site={site}
-			handleLinkClick={() => router.push('/')}
-			renderFooter={(site) => <Footer site={site} />}
+			handleLinkClick={() => router.push(getRouterRelativePath(site, '/'))}
+			renderFooter={(site: ISite) => <Footer site={site} />}
 		/>
 	);
 };
