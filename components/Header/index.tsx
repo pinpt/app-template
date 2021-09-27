@@ -1,5 +1,5 @@
 import router from 'next/router';
-import { ISite, PrebuiltHeader } from '@pinpt/react';
+import { getRouterRelativePath, ISite, PrebuiltHeader } from '@pinpt/react';
 
 export interface HeaderProps {
 	site: ISite;
@@ -10,8 +10,8 @@ const Header = (props: HeaderProps) => {
 	return (
 		<PrebuiltHeader
 			site={site}
-			handleSearch={(value) => router.push(`/search?term=${value}`)}
-			handleSelectHome={() => router.push('/')}
+			handleSearch={(value) => router.push(getRouterRelativePath(site, `/search?term=${value}`))}
+			handleSelectHome={() => router.push(getRouterRelativePath(site, '/'))}
 		/>
 	);
 };

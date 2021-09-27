@@ -2,8 +2,8 @@ import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import {
-	Banner, createClap, fetchContent, fetchContentAnalytics, fetchContentPaginated,
-	getRouterRelativePath, Head, IContent, ISite, PrebuiltEntry, slugifyString
+	Banner, createClap, fetchContent, fetchContentAnalytics, getRouterRelativePath, Head, IContent,
+	ISite, PrebuiltEntry
 } from '@pinpt/react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -73,20 +73,7 @@ export default function EntryPage(props: EntryPageProps) {
 	);
 }
 
-export async function getStaticPaths() {
-	const { content } = await fetchContentPaginated(config, { limit: 200, projection: ['id', 'title'] });
-
-	return {
-		paths: content.map(({ id, title }) => ({
-			params: {
-				id: [id, slugifyString(title)],
-			},
-		})),
-		fallback: 'blocking', // server render on-demand if page doesn't exist
-	};
-}
-
-export async function getStaticProps({
+export async function getServerSideProps({
 	params,
 	preview,
 	previewData,
@@ -95,21 +82,29 @@ export async function getStaticProps({
 	preview?: boolean;
 	previewData?: any;
 }) {
-	const { content, before, after, site } = await fetchContent(config, params.id[0], {
-		before: true,
-		after: true,
-		site: true,
-		commit: preview ? previewData?.commit : undefined,
-	});
+	try {
+		const { content, before, after, site } = await fetchContent(config, params.id[0], {
+			before: true,
+			after: true,
+			site: true,
+			commit: preview ? previewData?.commit : undefined,
+		});
 
-	return {
-		props: {
-			content,
-			site,
-			before,
-			after,
-			preview: !!preview,
-		},
-		revalidate: 1,
-	};
+		return {
+			props: {
+				content,
+				site,
+				before,
+				after,
+				preview: !!preview,
+			},
+		};
+	} catch (ex: any) {
+		if (ex.code === 404) {
+			return {
+				notFound: true,
+			};
+		}
+		throw ex;
+	}
 }
