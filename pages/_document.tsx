@@ -1,10 +1,14 @@
 import Document, { Head, Html, Main, NextScript } from 'next/document';
+import config from '../pinpoint.config';
+
+const fileApi = `https://file.${config.apihost?.includes('.edge.') ? 'edge.' : ''}pinpoint.com`;
 
 class MyDocument extends Document {
 	render() {
 		return (
 			<Html lang="en">
 				<Head>
+					<link rel="preconnect" href={fileApi} />
 					<link
 						rel="stylesheet"
 						crossOrigin="anonymous"
