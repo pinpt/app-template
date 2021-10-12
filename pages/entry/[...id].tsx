@@ -68,6 +68,9 @@ export default function EntryPage(props: EntryPageProps) {
 				handleSelectEntry={(content) => router.push(getRouterRelativePath(site, content.url))}
 				renderHeader={(site) => <Header site={site} />}
 				renderFooter={(site) => <Footer site={site} />}
+				handleAddTagToQuery={(value) =>
+					router.push(getRouterRelativePath(site, `/search?tags=${encodeURIComponent(JSON.stringify([value]))}`))
+				}
 			/>
 		</>
 	);
