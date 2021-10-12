@@ -1,9 +1,7 @@
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, useMemo } from 'react';
-import {
-	fetchSite, getRouterRelativePath, Head, PrebuiltSearchResults, useSearch
-} from '@pinpt/react';
+import { fetchSite, getRouterRelativePath, Head, PrebuiltSearchResults, useSearch } from '@pinpt/react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import config from '../pinpoint.config';
