@@ -2,8 +2,15 @@ import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 import {
-	Banner, createClap, fetchContent, fetchContentAnalytics, getRouterRelativePath, Head, IContent,
-	ISite, PrebuiltEntry
+	Banner,
+	createClap,
+	fetchContent,
+	fetchContentAnalytics,
+	getRouterRelativePath,
+	Head,
+	IContent,
+	ISite,
+	PrebuiltEntry,
 } from '@pinpt/react';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';

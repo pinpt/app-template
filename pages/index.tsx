@@ -1,8 +1,15 @@
 import NextHead from 'next/head';
 import { useRouter } from 'next/router';
 import {
-	Analytics, fetchAnalytics, fetchContentPaginated, fetchSiteWithContentCount,
-	getRouterRelativePath, Head, IContent, ISite, PrebuiltHome
+	Analytics,
+	fetchAnalytics,
+	fetchContentPaginated,
+	fetchSiteWithContentCount,
+	getRouterRelativePath,
+	Head,
+	IContent,
+	ISite,
+	PrebuiltHome,
 } from '@pinpt/react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
