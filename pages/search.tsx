@@ -16,7 +16,7 @@ export default function Search(props: SearchProps) {
 	const router = useRouter();
 	const tags = JSON.parse(decodeURIComponent((router?.query?.tags ?? '') as string) || '[]');
 	const term = (router?.query?.term as string) ?? '';
-	const { results, loading } = useSearch(term, tags, config.siteId);
+	const { results, loading } = useSearch(term, tags, site);
 
 	const handleRemoveFromQuery = useCallback(
 		(term: string, clear: boolean) => {
