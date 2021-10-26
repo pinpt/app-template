@@ -1,16 +1,31 @@
-import { PrebuiltSubscriptionSubscribe, fetchContentPaginated, ISite } from '@pinpt/react';
+import {
+	PrebuiltSubscriptionSubscribe,
+	fetchContentPaginated,
+	ISite,
+	executeAPI,
+	getRouterAbsolutePath,
+	useSubscriptionCreator,
+} from '@pinpt/react';
 import { useRouter } from 'next/router';
-import config from '../../../pinpoint.config';
-import Footer from '../../../components/Footer';
-import Header from '../../../components/Header';
-import { useCallback } from 'react';
+import config from '../pinpoint.config';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import { useCallback, useState } from 'react';
 
 const Subscribe = ({ site }: { site: ISite }) => {
 	const router = useRouter();
+	const { loading, query } = useSubscriptionCreator(site);
+	const [subscribed, setSubscribed] = useState<boolean>(false);
 
-	const handleSubmit = useCallback(async (email: string) => {
-		console.log(email, 'submitting');
-	}, []);
+	const handleSubmit = useCallback(
+		async (email: string) => {
+			const res = await query(email, config);
+			setSubscribed(res.subscribed);
+		},
+		[query]
+	);
+
+	console.log(loading);
 
 	return (
 		<PrebuiltSubscriptionSubscribe

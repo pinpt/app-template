@@ -1,5 +1,4 @@
-import { PrebuiltSubscriptionManage, fetchContentPaginated, ISite } from '@pinpt/react';
-import { SubscriptionInfo } from '@pinpt/react/dist/cjs/lib/types/subscription';
+import { PrebuiltSubscriptionManage, fetchContentPaginated, ISite, Loader, useSubscriptionList } from '@pinpt/react';
 import config from '../../../pinpoint.config';
 import Footer from '../../../components/Footer';
 import Header from '../../../components/Header';
@@ -7,15 +6,23 @@ import { useRouter } from 'next/router';
 
 const Manage = ({ site }: { site: ISite }) => {
 	const router = useRouter();
+	const subscriptionId = (router.query.id ?? '') as string;
+	const { result, loading, fileApi } = useSubscriptionList(subscriptionId, site, config);
+
+	if (loading) {
+		return <Loader />;
+	}
 
 	return (
 		<PrebuiltSubscriptionManage
 			site={site}
-			subscriptions={{ subscriptions: [], sites: {} } as SubscriptionInfo}
+			subscriptions={result}
 			renderHeader={(site) => <Header site={site} noSubscribe />}
 			renderFooter={(site) => <Footer site={site} noSubscribe />}
 			handleSelectHome={() => router.push('/')}
+			handleClickUpdate={() => router.push(`/subscription/${subscriptionId}/verify`)}
 			className="flex flex-col h-screen"
+			fileApi={fileApi}
 		/>
 	);
 };

@@ -1,4 +1,9 @@
-import { PrebuiltSubscriptionVerify, fetchContentPaginated, ISite } from '@pinpt/react';
+import {
+	PrebuiltSubscriptionVerify,
+	fetchContentPaginated,
+	ISite,
+	useSubscriptionUpdater,
+} from '@pinpt/react';
 import config from '../../../pinpoint.config';
 import Footer from '../../../components/Footer';
 import Header from '../../../components/Header';
@@ -7,32 +12,37 @@ import { useCallback, useEffect, useState } from 'react';
 
 const Verify = ({ site }: { site: ISite }) => {
 	const router = useRouter();
+	const subscriptionId = (router.query.id ?? '') as string;
 	const [verified, setVerified] = useState<boolean>(false);
-	const [firstName, setFirstName] = useState<string>('Keegan');
-	const [lastName, setLastName] = useState<string>('Donley');
-	const [loading, setLoading] = useState<boolean>(true);
+	const [firstName, setFirstName] = useState<string>('');
+	const [lastName, setLastName] = useState<string>('');
 	const [pending, setPending] = useState<boolean>(false);
+	const { query, loading } = useSubscriptionUpdater(subscriptionId, site, config);
 
-	const fetchSubscription = useCallback(() => {
-		const subscriptionId = router.query.id;
-		console.log('fetching sub', subscriptionId);
-		setLoading(false);
-		setVerified(true);
-	}, [router]);
+	const performValidation = useCallback(async () => {
+		const result = await query({ verified: true });
+		setVerified(result.verified ?? false);
+		setFirstName(result.firstName ?? '');
+		setLastName(result.lastName ?? '');
+	}, [query]);
 
-	const handleSave = useCallback(async (firstName: string, lastName: string) => {
-		try {
-			setPending(true);
-			setFirstName(firstName);
-			setLastName(lastName);
-		} finally {
-			setPending(false);
-		}
-	}, []);
+	const handleSave = useCallback(
+		async (firstName: string, lastName: string) => {
+			try {
+				setPending(true);
+				const result = await query({ firstName: firstName ?? '', lastName: lastName ?? '' });
+				setFirstName(result.firstName ?? '');
+				setLastName(result.lastName ?? '');
+			} finally {
+				setPending(false);
+			}
+		},
+		[query]
+	);
 
 	useEffect(() => {
-		fetchSubscription();
-	}, [fetchSubscription]);
+		performValidation();
+	}, [performValidation]);
 
 	return (
 		<PrebuiltSubscriptionVerify
