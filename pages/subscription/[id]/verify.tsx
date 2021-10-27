@@ -1,9 +1,4 @@
-import {
-	PrebuiltSubscriptionVerify,
-	fetchContentPaginated,
-	ISite,
-	useSubscriptionUpdater,
-} from '@pinpt/react';
+import { PrebuiltSubscriptionVerify, fetchContentPaginated, ISite, useSubscriptionUpdater } from '@pinpt/react';
 import config from '../../../pinpoint.config';
 import Footer from '../../../components/Footer';
 import Header from '../../../components/Header';

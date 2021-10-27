@@ -1,4 +1,11 @@
-import { PrebuiltSubscriptionUnsubscribe, fetchContentPaginated, ISite } from '@pinpt/react';
+import {
+	PrebuiltSubscriptionUnsubscribe,
+	fetchContentPaginated,
+	ISite,
+	useSubscription,
+	Loader,
+	useSubscriptionUpdater,
+} from '@pinpt/react';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import config from '../../../pinpoint.config';
@@ -6,33 +13,39 @@ import Footer from '../../../components/Footer';
 import Header from '../../../components/Header';
 
 const Unsubscribe = ({ site }: { site: ISite }) => {
-	const [email, setEmail] = useState<string>('');
-	const [subscribed, setSubscribed] = useState<boolean>(false);
 	const router = useRouter();
+	const subscriptionId = router.query.id as string;
+	const { subscription, loading, refetch } = useSubscription(subscriptionId, site, config);
+	const { query } = useSubscriptionUpdater(subscriptionId, site, config);
 
 	const handleSubscribe = useCallback(async () => {
-		setSubscribed(true);
-	}, []);
+		await query({ subscribed: true });
+		await refetch();
+	}, [query, refetch]);
 
 	const handleUnSubscribe = useCallback(async () => {
-		setSubscribed(false);
-	}, []);
+		await query({ subscribed: false });
+		await refetch();
+	}, [query, refetch]);
 
 	const handleManageSubscriptions = useCallback(() => {
-		const subscriptionId = router.query.id;
 		router.push(`/subscription/${subscriptionId}/manage`);
-	}, [router]);
+	}, [router, subscriptionId]);
+
+	if (loading) {
+		return <Loader />;
+	}
 
 	return (
 		<PrebuiltSubscriptionUnsubscribe
 			site={site}
-			email={email}
+			email={subscription.email}
 			renderHeader={(site) => <Header site={site} noSubscribe />}
 			renderFooter={(site) => <Footer site={site} noSubscribe />}
 			handleSelectHome={() => router.push('/')}
 			handleSubscribe={handleSubscribe}
 			handleUnsubscribe={handleUnSubscribe}
-			subscribed={subscribed}
+			subscribed={subscription.subscribed}
 			manageSubscriptions={handleManageSubscriptions}
 			className="flex flex-col h-screen"
 		/>
