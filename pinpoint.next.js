@@ -6,39 +6,47 @@ const homeurl = (apihost || '').includes('.edge.') ? `https://home.edge.pinpoint
 const apiRules = [
 	{
 		source: '/site-api/v1/feedback/submit',
-		destination: `https://${apihost}/feedback/${siteId}/submit`
+		destination: `https://${apihost}/feedback/${siteId}/submit`,
 	},
 	{
 		source: '/site-api/v1/site',
-		destination: `https://${apihost}/site/v1/${siteId}`
+		destination: `https://${apihost}/site/v1/${siteId}`,
 	},
 	{
 		source: '/site-api/v1/site/:slug*',
-		destination: `https://${apihost}/site/v1/${siteId}/:slug*`
+		destination: `https://${apihost}/site/v1/${siteId}/:slug*`,
 	},
 	{
 		source: '/site-api/v1/content',
-		destination: `https://${apihost}/content/v1/${siteId}`
+		destination: `https://${apihost}/content/v1/${siteId}`,
 	},
 	{
 		source: '/site-api/v1/content/:slug*',
-		destination: `https://${apihost}/content/v1/${siteId}/:slug*`
+		destination: `https://${apihost}/content/v1/${siteId}/:slug*`,
 	},
 	{
 		source: '/subscription/subscribe',
-		destination: `${homeurl}/subscription/subscribe/${siteId}`
+		destination: `/subscribe`,
+	},
+	{
+		source: '/subscription/manage/:subId',
+		destination: '/subscription/:subId/manage',
+	},
+	{
+		source: '/subscription/unsubscribe/:subId',
+		destination: '/subscription/:subId/unsubscribe',
 	},
 	{
 		source: '/api/event',
-		destination: `https://${apihost}/analytics/track`
+		destination: `https://${apihost}/analytics/track`,
 	},
 	{
 		source: '/rss',
-		destination: `https://${apihost}/rss/${siteId}`
+		destination: `https://${apihost}/rss/${siteId}`,
 	},
 	{
 		source: '/a.js',
-		destination: `https://cdn.pinpoint.com/beacon2/index.min.js`
+		destination: `https://cdn.pinpoint.com/beacon2/index.min.js`,
 	},
 	{
 		source: '/api/widget/rules',
