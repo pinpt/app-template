@@ -1,4 +1,4 @@
-import { PrebuiltSubscriptionVerify, ISite, useSubscriptionUpdater } from '@pinpt/react';
+import { PrebuiltSubscriptionVerify, ISite, useSubscriptionUpdater, getRouterRelativePath } from '@pinpt/react';
 import config from '../../pinpoint.config';
 import Footer from '../Footer';
 import Header from '../Header';
@@ -38,7 +38,7 @@ const SubscriptionVerify = ({ site }: { site: ISite }) => {
 			site={site}
 			renderHeader={(site) => <Header site={site} noSubscribe />}
 			renderFooter={(site) => <Footer site={site} noSubscribe />}
-			handleSelectHome={() => router.push('/')}
+			handleSelectHome={() => router.push(getRouterRelativePath(site, '/'))}
 			verified={verified}
 			firstName={firstName}
 			lastName={lastName}
