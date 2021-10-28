@@ -14,10 +14,14 @@ const SubscriptionVerify = ({ site }: { site: ISite }) => {
 	const { query, loading } = useSubscriptionUpdater(subscriptionId, site, config);
 
 	const performValidation = useCallback(async () => {
-		const result = await query({ verified: true });
-		setVerified(result.verified ?? false);
-		setFirstName(result.firstName ?? '');
-		setLastName(result.lastName ?? '');
+		try {
+			const result = await query({ verified: true });
+			setVerified(result.verified ?? false);
+			setFirstName(result.firstName ?? '');
+			setLastName(result.lastName ?? '');
+		} catch {
+			setVerified(false);
+		}
 	}, [query]);
 
 	const handleSave = useCallback(

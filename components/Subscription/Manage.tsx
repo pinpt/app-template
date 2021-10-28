@@ -21,20 +21,26 @@ const SubscriptionManage = ({ site }: { site: ISite }) => {
 
 	const handleUnsubscribe = useCallback(
 		async (id: string) => {
-			setPendingState((s) => ({ ...s, [id]: true }));
-			await query({ subscribed: false }, id);
-			await refetch();
-			setPendingState((s) => ({ ...s, [id]: false }));
+			try {
+				setPendingState((s) => ({ ...s, [id]: true }));
+				await query({ subscribed: false }, id);
+				await refetch();
+			} finally {
+				setPendingState((s) => ({ ...s, [id]: false }));
+			}
 		},
 		[query, refetch]
 	);
 
 	const handleResubscribe = useCallback(
 		async (id: string) => {
-			setPendingState((s) => ({ ...s, [id]: true }));
-			await query({ subscribed: true }, id);
-			await refetch();
-			setPendingState((s) => ({ ...s, [id]: false }));
+			try {
+				setPendingState((s) => ({ ...s, [id]: true }));
+				await query({ subscribed: true }, id);
+				await refetch();
+			} finally {
+				setPendingState((s) => ({ ...s, [id]: false }));
+			}
 		},
 		[query, refetch]
 	);

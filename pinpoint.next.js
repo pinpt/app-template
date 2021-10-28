@@ -26,7 +26,15 @@ const apiRules = [
 	},
 	{
 		source: '/subscription/subscribe',
-		destination: `${homeurl}/subscription/subscribe/${siteId}`,
+		destination: `/subscribe`,
+	},
+	{
+		source: '/subscription/manage/:subId',
+		destination: '/subscription/:subId/manage',
+	},
+	{
+		source: '/subscription/unsubscribe/:subId',
+		destination: '/subscription/:subId/unsubscribe',
 	},
 	{
 		source: '/api/event',
