@@ -1,4 +1,4 @@
-import { fetchContentPaginated, ISite, Loader, useRoadmap, PrebuiltRoadmap, getRouterRelativePath } from "@pinpt/react";
+import { fetchContentPaginated, ISite, Loader, useRoadmap, PrebuiltRoadmap, getRouterRelativePath } from '@pinpt/react';
 import config from '../pinpoint.config';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -7,7 +7,7 @@ const Roadmap = ({ site }: { site: ISite }) => {
 	const { loading, roadmap } = useRoadmap(config, site);
 
 	if (loading || !roadmap) {
-		return <Loader />
+		return <Loader />;
 	}
 
 	return (
@@ -35,8 +35,8 @@ export async function getServerSideProps() {
 			redirect: {
 				destination: getRouterRelativePath(site, '/'),
 				permanent: false,
-			}
-		}
+			},
+		};
 	}
 
 	return {
