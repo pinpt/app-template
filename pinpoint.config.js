@@ -1,6 +1,6 @@
 module.exports = {
-	slug: 'pinpoint',
-	siteId: 'PirxVTE94u3YmGNOySRY',
-	apihost: 'api.pinpoint.com',
+	slug: 'keegandonley',
+	siteId: '0eG8DEulKKdC0HYeNRZT',
+	apihost: 'api.edge.pinpoint.com',
 	pageSize: 11,
 };
