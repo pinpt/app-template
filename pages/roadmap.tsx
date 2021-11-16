@@ -1,15 +1,17 @@
-import { fetchContentPaginated, ISite, Loader, useRoadmap, PrebuiltRoadmap, getRouterRelativePath } from '@pinpt/react';
+import {
+	fetchContentPaginated,
+	ISite,
+	PrebuiltRoadmap,
+	getRouterRelativePath,
+	fetchRoadmap,
+	getRouterAbsolutePath,
+} from '@pinpt/react';
+import { PublishedRoadmapResponse } from '@pinpt/react/dist/cjs/lib/types/roadmap';
 import config from '../pinpoint.config';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-const Roadmap = ({ site }: { site: ISite }) => {
-	const { loading, roadmap } = useRoadmap(config, site);
-
-	if (loading || !roadmap) {
-		return <Loader />;
-	}
-
+const Roadmap = ({ site, roadmap }: { site: ISite; roadmap: PublishedRoadmapResponse }) => {
 	return (
 		<div>
 			<PrebuiltRoadmap
@@ -30,18 +32,33 @@ export async function getServerSideProps() {
 		site: true,
 	});
 
-	if (site && !site.features.roadmap) {
+	if (site) {
+		if (!site.features.roadmap) {
+			return {
+				redirect: {
+					destination: getRouterRelativePath(site, '/'),
+					permanent: false,
+				},
+			};
+		}
+
+		const roadmap = await fetchRoadmap({
+			...config,
+			siteUrl: getRouterAbsolutePath(site, ''),
+		});
+
 		return {
-			redirect: {
-				destination: getRouterRelativePath(site, '/'),
-				permanent: false,
+			props: {
+				site,
+				roadmap,
 			},
 		};
 	}
 
 	return {
-		props: {
-			site,
+		redirect: {
+			destination: '/',
+			permanent: false,
 		},
 	};
 }
