@@ -17,7 +17,9 @@ const Roadmap = ({ site, roadmap }: { site: ISite; roadmap: PublishedRoadmapResp
 			<PrebuiltRoadmap
 				site={site}
 				roadmap={roadmap}
-				renderHeader={(site) => <Header site={site} title={roadmap.title || undefined} description={roadmap.description || undefined} />}
+				renderHeader={(site) => (
+					<Header site={site} title={roadmap.title || undefined} description={roadmap.description || undefined} />
+				)}
 				renderFooter={(site) => <Footer site={site} />}
 			/>
 		</div>
