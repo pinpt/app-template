@@ -20,7 +20,6 @@ export default function Search(props: SearchProps) {
 
 	const handleRemoveFromQuery = useCallback(
 		(term: string, clear: boolean) => {
-			console.log(term, tags);
 			if (clear) {
 				router.push(getRouterRelativePath(site, '/'));
 			} else {
