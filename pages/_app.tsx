@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import '@fortawesome/fontawesome-svg-core/styles.css';
 import 'tailwindcss/tailwind.css';
 import '@pinpt/react/dist/base.css';
 import '@pinpt/react/dist/entry.css';
