@@ -5,6 +5,9 @@ import {
 	getRouterRelativePath,
 	fetchRoadmap,
 	getRouterAbsolutePath,
+	createVote,
+	getVoteCounts,
+	useRoadmap,
 } from '@pinpt/react';
 import { PublishedRoadmapResponse } from '@pinpt/react/dist/cjs/lib/types/roadmap';
 import config from '../pinpoint.config';
@@ -12,6 +15,8 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 const Roadmap = ({ site, roadmap }: { site: ISite; roadmap: PublishedRoadmapResponse }) => {
+	const { userVotes, globalVotes, handleVote, loading, pendingVotes } = useRoadmap(config, site);
+
 	return (
 		<div>
 			<PrebuiltRoadmap
@@ -21,6 +26,12 @@ const Roadmap = ({ site, roadmap }: { site: ISite; roadmap: PublishedRoadmapResp
 					<Header site={site} title={roadmap.title || undefined} description={roadmap.description || undefined} />
 				)}
 				renderFooter={(site) => <Footer site={site} />}
+				enableVoting
+				userVotes={userVotes}
+				handleVote={handleVote}
+				totalVotes={globalVotes}
+				fetching={loading}
+				loadingVotes={pendingVotes}
 			/>
 		</div>
 	);
