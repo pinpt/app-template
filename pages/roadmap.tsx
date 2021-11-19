@@ -5,8 +5,6 @@ import {
 	getRouterRelativePath,
 	fetchRoadmap,
 	getRouterAbsolutePath,
-	createVote,
-	getVoteCounts,
 	useRoadmap,
 } from '@pinpt/react';
 import { PublishedRoadmapResponse } from '@pinpt/react/dist/cjs/lib/types/roadmap';
