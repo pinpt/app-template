@@ -6,7 +6,9 @@ import {
 	fetchRoadmap,
 	getRouterAbsolutePath,
 	useRoadmap,
+	Head,
 } from '@pinpt/react';
+import NextHead from 'next/head';
 import { PublishedRoadmapResponse } from '@pinpt/react/dist/cjs/lib/types/roadmap';
 import config from '../pinpoint.config';
 import Footer from '../components/Footer';
@@ -17,6 +19,10 @@ const Roadmap = ({ site, roadmap }: { site: ISite; roadmap: PublishedRoadmapResp
 
 	return (
 		<div>
+			<NextHead>
+				<title>{roadmap.title}</title>
+				<Head site={site} />
+			</NextHead>
 			<PrebuiltRoadmap
 				site={site}
 				roadmap={roadmap}
